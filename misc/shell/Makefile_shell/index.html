@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6.2.1. Makefile与shell的区别 &mdash; ywg_dev_doc 0.1 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.3. 调试手段" href="../../program_debug/index.html" />
+    <link rel="prev" title="6.2. shell 使用笔记" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> ywg_dev_doc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../u-boot/index.html">1. u-boot dev note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kernel/index.html">2. kernel note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../driver/index.html">3. linux driver modules note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fs/index.html">4. file system note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">5. application development node</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">6. misc</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../git/index.html">6.1. git 使用笔记</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6.2. shell 使用笔记</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.2.1. Makefile与shell的区别</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">6.2.1.1. 变量引用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.2.1.2. 通配符区别</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">6.2.1.3. 打印输出</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">6.2.1.4. 代码片段</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#makfile">6.2.1.5. makfile中的反引号``</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#makefile">6.2.1.6. makefile中嵌入脚本</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../program_debug/index.html">6.3. 调试手段</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../performance_optimzation/index.html">6.4. 性能优化</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../issues/index.html">7. Issues</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ywg_dev_doc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html"><span class="section-number">6. </span>misc</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6.2. </span>shell 使用笔记</a> &raquo;</li>
+        
+      <li><span class="section-number">6.2.1. </span>Makefile与shell的区别</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/misc/shell/Makefile_shell/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="makefileshell">
+<h1><span class="section-number">6.2.1. </span>Makefile与shell的区别<a class="headerlink" href="#makefileshell" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">6.2.1.1. </span>变量引用<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>shell中所有引用要以$打头的变量其后要加{}, 而在Makefile中以$打头的后要加()如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Makefile
+PATH:=/opt/toolchain
+SUBPATH:=$(PATH)
+
+shell
+PATH:=/opt/toolchain
+SUBPATH:=${PATH}
+</pre></div>
+</div>
+<p>Makefile中所有以$打头的单词都会被解释称Makefile中的变量
+如果需要调用shell中的变量,都需要加上两个$符号($$),如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PATH=/opt/toolchain
+all:
+    echo $(PATH)      #引用的是Makefile中的变量
+    echo $$PATH       #引用的是shell中的PATH环境变量
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">6.2.1.2. </span>通配符区别<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>shell中 <code class="docutils literal notranslate"><span class="pre">*</span></code> 表示所有字符,Makfile中 <code class="docutils literal notranslate"><span class="pre">%</span></code> 表示所有字符</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.2.1.3. </span>打印输出<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>在Makefile中只能在target中调用shell脚本，其他地方是不能输出的，比如如下代码没有任何输出</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span><span class="o">=</span><span class="s2">&quot;hello&quot;</span>
+<span class="n">echo</span> <span class="s2">&quot;$(var)&quot;</span>
+<span class="nb">all</span><span class="p">:</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">6.2.1.4. </span>代码片段<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>Makefile中执行shell,每一行都是一个进程,不同行之间变量不能传递,所以Makefile中shell不管多长也要写在一行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SUBDIR=src example
+all:
+    @for subdir in $(SUBDIR);   \
+    do \
+        echo &quot;building &quot;;   \
+    done
+</pre></div>
+</div>
+</div>
+<div class="section" id="makfile">
+<h2><span class="section-number">6.2.1.5. </span>makfile中的反引号``<a class="headerlink" href="#makfile" title="永久链接至标题">¶</a></h2>
+<p>反引号括起来的字符串被shell解释为命令行，执行时shell首先执行该命令行，并以它的标准输出结果取代整个反引号部分</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PATH=`pwd`
+TODAY=`date`
+等同于
+PATH=$(shell pwd)
+TODAY=$(shell date)
+</pre></div>
+</div>
+</div>
+<div class="section" id="makefile">
+<h2><span class="section-number">6.2.1.6. </span>makefile中嵌入脚本<a class="headerlink" href="#makefile" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>env:
+    sh $(SRC_PATH)/scripts/connect.sh
+    find $(SRC_PATH) -name &quot;sysinfo.cfg&quot; | xargs rm -f
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../program_debug/index.html" class="btn btn-neutral float-right" title="6.3. 调试手段" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="6.2. shell 使用笔记" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; 版权所有 2020, yinwg
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

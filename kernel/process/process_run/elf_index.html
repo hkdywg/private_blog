@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.6.3. 进程运行 &mdash; ywg_dev_doc 0.1 文档</title>
+  <title>2.6.3.2. linux elf文件格式详解 &mdash; ywg_dev_doc 0.1 文档</title>
   
 
   
@@ -37,8 +37,8 @@
     
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
-    <link rel="next" title="2.6.3.1. linux进程启动过程分析" href="do_execve_index.html" />
-    <link rel="prev" title="2.6.2.5. do_fork" href="../process_create/do_fork/index.html" /> 
+    <link rel="next" title="2.6.3.3. elf文件加载过程" href="load_elf_index.html" />
+    <link rel="prev" title="2.6.3.1. linux进程启动过程分析" href="do_execve_index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,9 +94,9 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">2.6. 进程管理与调度</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../process_overview/index.html">2.6.1. 进程描述</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../process_create/index.html">2.6.2. 进程创建</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">2.6.3. 进程运行</a><ul>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">2.6.3. 进程运行</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="do_execve_index.html">2.6.3.1. linux进程启动过程分析</a></li>
-<li class="toctree-l4"><a class="reference internal" href="elf_index.html">2.6.3.2. linux elf文件格式详解</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">2.6.3.2. linux elf文件格式详解</a></li>
 <li class="toctree-l4"><a class="reference internal" href="load_elf_index.html">2.6.3.3. elf文件加载过程</a></li>
 </ul>
 </li>
@@ -162,13 +162,15 @@
         
           <li><a href="../index.html"><span class="section-number">2.6. </span>进程管理与调度</a> &raquo;</li>
         
-      <li><span class="section-number">2.6.3. </span>进程运行</li>
+          <li><a href="index.html"><span class="section-number">2.6.3. </span>进程运行</a> &raquo;</li>
+        
+      <li><span class="section-number">2.6.3.2. </span>linux elf文件格式详解</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../../_sources/kernel/process/process_run/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/kernel/process/process_run/elf_index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -181,18 +183,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="id1">
-<h1><span class="section-number">2.6.3. </span>进程运行<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="do_execve_index.html">2.6.3.1. linux进程启动过程分析</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="do_execve_index.html#execve">2.6.3.1.1. execve加载可执行程序的过程</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="elf_index.html">2.6.3.2. linux elf文件格式详解</a></li>
-<li class="toctree-l1"><a class="reference internal" href="load_elf_index.html">2.6.3.3. elf文件加载过程</a></li>
-</ul>
-</div>
+  <div class="section" id="linux-elf">
+<h1><span class="section-number">2.6.3.2. </span>linux elf文件格式详解<a class="headerlink" href="#linux-elf" title="永久链接至标题">¶</a></h1>
 </div>
 
 
@@ -203,10 +195,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="do_execve_index.html" class="btn btn-neutral float-right" title="2.6.3.1. linux进程启动过程分析" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="load_elf_index.html" class="btn btn-neutral float-right" title="2.6.3.3. elf文件加载过程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../process_create/do_fork/index.html" class="btn btn-neutral float-left" title="2.6.2.5. do_fork" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="do_execve_index.html" class="btn btn-neutral float-left" title="2.6.3.1. linux进程启动过程分析" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -298,10 +298,79 @@
     <span class="n">entry</span><span class="o">-&gt;</span><span class="nb">next</span> <span class="o">=</span> <span class="nb">list</span><span class="p">;</span>
     <span class="nb">list</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">entry</span><span class="p">;</span>
 <span class="p">}</span>
+
+<span class="n">static</span> <span class="n">line</span> <span class="n">void</span> <span class="n">lis_cut_position</span><span class="p">(</span><span class="n">struct</span> <span class="n">list_head</span> <span class="o">*</span><span class="nb">list</span><span class="p">,</span> <span class="n">struct</span> <span class="n">list_head</span> <span class="o">*</span><span class="n">head</span><span class="p">,</span> <span class="n">struct</span> <span class="n">list_head</span> <span class="n">entry</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">list_entry</span><span class="p">(</span><span class="n">head</span><span class="p">))</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">list_is_singular</span><span class="p">(</span><span class="n">head</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nb">list</span><span class="o">-&gt;</span><span class="nb">next</span> <span class="o">!=</span> <span class="n">entry</span> <span class="o">&amp;&amp;</span> <span class="n">head</span> <span class="o">!=</span> <span class="n">entry</span><span class="p">))</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">entry</span> <span class="o">==</span> <span class="n">head</span><span class="p">)</span>
+        <span class="n">INIT_LIST_HEAD</span><span class="p">(</span><span class="nb">list</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="n">__list_cut_position</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">entry</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>list_cut_position 用于把head链表分为两部分，从head-&gt;next 一直到entry被从head链表中删除，加入新的链表list。
 新的链表应该是空的，或者原来的节点可以被忽略掉。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static inline void __list_splice(struct list_head *list, struct list_head *prev, struct list_head *next)
+{
+    struct list_head *first = list-&gt;next;
+    struct list_head *last = list-&gt;prev;
+
+    prev-&gt;next = first;
+    first-&gt;prev = prev;
+
+    last-&gt;next = next;
+    next-&gt;prev = last;
+}
+
+static inline void list_splice(struct list_head *list, struct list_head *head)
+{
+    if(!list_empty(list))
+        __list_splice(list, head, head-&gt;next);
+}
+
+static inline void list_splice_tail(struct list_head *list, struct list_head *head)
+{
+    if(!list_emptu=y(list))
+        __list_splice(list, head-&gt;prev, head)；
+}
+</pre></div>
+</div>
+<p>list_splict 的功能和list_cut_posiotion相反，它合并两个链表。list_splice把list链表中的节点加入到head链表中。</p>
+<p>list_splict是把原来list链表中的节点全部插入到head链表的头部，list_splice_tail则是把原来list链表中的节点全部加到head链表的尾部。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define list_entry(ptr, type, member) \</span>
+    <span class="n">container_of</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">member</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>list_entry 主要用于从list节点查找其内嵌在的结构。比如定义了一个结构struct A{struct list_head list;},如果知道结构中链表的地址ptrlist，
+就可以从ptrlist进而获取整个结构的指针，struct A *Ptr = list_entry(ptrlist, struct A, list);</p>
+<p>这种地址翻译的技巧是linux的拿手好戏，container_of随处可见，只是链表节点多被封装在更复杂的结构中，使用专门的list_entry定义也是对了使用方便</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define __list_for_each(pos,head) \</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">next</span><span class="p">;</span> <span class="n">pos</span> <span class="o">!=</span> <span class="n">head</span><span class="p">;</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">-&gt;</span><span class="nb">next</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>list_for_each 遍历链表中的每一个节点。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define list_for_each_prev(pos,head) \</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">;</span> <span class="n">pos</span> <span class="o">!=</span> <span class="n">head</span><span class="p">;</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>list_for_each_prev 遍历链表中的每一个节点，不同的是它是逆序的.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define list_for_each_safe(pos, n, head) \</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">next</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">pos</span><span class="o">-&gt;</span><span class="nb">next</span><span class="p">;</span><span class="n">pos</span> <span class="o">!=</span> <span class="n">head</span><span class="p">;</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">n</span><span class="p">,</span><span class="n">n</span> <span class="o">=</span> <span class="n">pos</span><span class="o">-&gt;</span><span class="nb">next</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>list_for_each_safe 也是链表顺序遍历，只是它更加安全，即使在遍历过程中喔咕，当前节点从链表中删除，也不会影响链表的遍历。参数中需要加一个暂存的链表节点指针n</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define list_for_each_entry(pos, head, member) \</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">pos</span> <span class="o">=</span> <span class="n">list_entry</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="nb">next</span><span class="p">,</span> <span class="n">typeof</span><span class="p">(</span><span class="o">*</span><span class="n">pos</span><span class="p">),</span> <span class="n">member</span><span class="p">);</span>
+        <span class="o">&amp;</span><span class="n">pos</span><span class="o">-&gt;</span><span class="n">member</span> <span class="o">!=</span> <span class="n">head</span><span class="p">;</span> \
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">list_entry</span><span class="p">(</span><span class="n">pos</span><span class="o">-&gt;</span><span class="n">memer</span><span class="o">.</span><span class="n">prev</span><span class="p">,</span> <span class="n">typeof</span><span class="p">(</span><span class="o">*</span><span class="n">pos</span><span class="p">),</span> <span class="n">member</span><span class="p">)</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>list_for_each_entry 不是遍历链表节点，而是遍历链表节点所嵌套进的结list_for_each_entry 不是遍历链表节点，而是遍历链表节点所嵌套进的结构.</p>
 </div>
 
 

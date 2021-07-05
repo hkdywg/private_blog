@@ -37,7 +37,7 @@
     
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
-    <link rel="next" title="2.6.6. 调度普通进程-完全公平调度器CFS" href="../process_cfs/index.html" />
+    <link rel="next" title="2.6.5.1. linux进程调度器概述" href="inrtoduction.html" />
     <link rel="prev" title="2.6.4. 进程退出" href="../process_quite/index.html" /> 
 </head>
 
@@ -96,7 +96,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../process_create/index.html">2.6.2. 进程创建</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../process_run/index.html">2.6.3. 进程运行</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../process_quite/index.html">2.6.4. 进程退出</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">2.6.5. 进程调度</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.6.5. 进程调度</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="inrtoduction.html">2.6.5.1. linux进程调度器概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="design.html">2.6.5.2. linux进程调度器的设计</a></li>
+<li class="toctree-l4"><a class="reference internal" href="main_schedule.html">2.6.5.3. linux进程调度器之主调度器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prioprity.html">2.6.5.4. linux进程优先级的处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wakeup.html">2.6.5.5. linux唤醒抢占</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../process_cfs/index.html">2.6.6. 调度普通进程-完全公平调度器CFS</a></li>
 </ul>
 </li>
@@ -178,6 +185,29 @@
             
   <div class="section" id="id1">
 <h1><span class="section-number">2.6.5. </span>进程调度<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="inrtoduction.html">2.6.5.1. linux进程调度器概述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inrtoduction.html#id1">2.6.5.1.1. 背景知识</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inrtoduction.html#id2">2.6.5.1.1.1. 什么是调度器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inrtoduction.html#id3">2.6.5.1.1.2. 调度策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inrtoduction.html#id4">2.6.5.1.1.3. 进程饥饿</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inrtoduction.html#id5">2.6.5.1.2. linux进程分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inrtoduction.html#id6">2.6.5.1.3. linux调度器设计</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inrtoduction.html#id7">2.6.5.1.3.1. linux进程调度器的框架</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inrtoduction.html#id8">2.6.5.1.4. 进程的调度</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">2.6.5.2. linux进程调度器的设计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_schedule.html">2.6.5.3. linux进程调度器之主调度器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prioprity.html">2.6.5.4. linux进程优先级的处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wakeup.html">2.6.5.5. linux唤醒抢占</a></li>
+</ul>
+</div>
 </div>
 
 
@@ -188,7 +218,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../process_cfs/index.html" class="btn btn-neutral float-right" title="2.6.6. 调度普通进程-完全公平调度器CFS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="inrtoduction.html" class="btn btn-neutral float-right" title="2.6.5.1. linux进程调度器概述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../process_quite/index.html" class="btn btn-neutral float-left" title="2.6.4. 进程退出" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
